@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import SpotlightCard from '@/components/SpotlightCard';
-import Aurora from '@/components/Aurora';
+import Squares from '@/components/Squares';
 import GradientText from '@/components/GradientText';
 
 const DrawingCanvas = dynamic(() => import('@/components/DrawingCanvas'), {
@@ -200,14 +200,15 @@ function Dashboard() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative">
-      {/* Aurora Background */}
-      <div className="fixed inset-0 pointer-events-none opacity-30">
-        <Aurora
-          colorStops={['#3b82f6', '#8b5cf6', '#3b82f6']}
-          amplitude={1.2}
-          blend={0.6}
+    <div className="min-h-screen relative">
+      {/* Squares Background */}
+      <div className="fixed inset-0 pointer-events-none">
+        <Squares
           speed={0.5}
+          squareSize={40}
+          direction='diagonal'
+          borderColor='#8b5cf6'
+          hoverFillColor='#1e1b4b'
         />
       </div>
 
