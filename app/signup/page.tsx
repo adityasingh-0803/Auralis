@@ -5,7 +5,9 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { UserPlus, Mail, Lock, User } from 'lucide-react';
+import { Mail, Lock, User } from 'lucide-react';
+import RippleGrid from '@/components/Ripplegrid';
+import ShinyText from '@/components/ShinyText';
 
 export default function SignupPage() {
   const [email, setEmail] = useState('');
@@ -32,88 +34,110 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 w-full max-w-md"
-      >
-        <div className="text-center mb-8">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: 'spring' }}
-            className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4"
-          >
-            <UserPlus className="w-8 h-8 text-blue-600" />
-          </motion.div>
-          <h1 className="text-3xl font-bold text-gray-900">Create Account</h1>
-          <p className="text-gray-600 mt-2">Start organizing your notes with AI</p>
-        </div>
+    <>
+      {/* RippleGrid Background - Fixed to viewport */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: 0,
+        backgroundColor: '#0a0a0a'
+      }}>
+        <RippleGrid
+          enableRainbow={false}
+          gridColor="#8b5cf6"
+          rippleIntensity={0.05}
+          gridSize={10}
+          gridThickness={15}
+          mouseInteraction={true}
+          mouseInteractionRadius={1.2}
+          opacity={0.6}
+          glowIntensity={0.2}
+          vignetteStrength={1.5}
+        />
+      </div>
 
+      {/* Content Overlay */}
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ position: 'relative', zIndex: 10, pointerEvents: 'none' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="p-8 w-full max-w-md"
+          style={{ pointerEvents: 'auto' }}
+        >
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="bg-red-50 text-red-600 p-3 rounded-lg text-sm"
+              className="bg-red-500/20 border border-red-500/50 text-red-200 p-3 rounded-lg text-sm"
             >
               {error}
             </motion.div>
           )}
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Full Name
-            </label>
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <div className="space-y-2">
+            <ShinyText
+              text="Full Name"
+              disabled={false}
+              speed={3}
+              className='text-sm font-medium text-purple-300'
+            />
+            <div className="flex items-center border-b-2 border-white/30 focus-within:border-purple-500 transition-all duration-300">
+              <User className="w-5 h-5 text-gray-400 mr-3" />
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                placeholder="John Doe"
+                className="w-full bg-transparent text-white placeholder-gray-500 py-3 outline-none"
+                placeholder="Enter your name"
                 required
               />
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <div className="space-y-2">
+            <ShinyText
+              text="Email"
+              disabled={false}
+              speed={3}
+              className='text-sm font-medium text-purple-300'
+            />
+            <div className="flex items-center border-b-2 border-white/30 focus-within:border-purple-500 transition-all duration-300">
+              <Mail className="w-5 h-5 text-gray-400 mr-3" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                placeholder="you@example.com"
+                className="w-full bg-transparent text-white placeholder-gray-500 py-3 outline-none"
+                placeholder="Enter your email"
                 required
               />
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Password
-            </label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <div className="space-y-2">
+            <ShinyText
+              text="Password"
+              disabled={false}
+              speed={3}
+              className='text-sm font-medium text-purple-300'
+            />
+            <div className="flex items-center border-b-2 border-white/30 focus-within:border-purple-500 transition-all duration-300">
+              <Lock className="w-5 h-5 text-gray-400 mr-3" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                placeholder="••••••••"
+                className="w-full bg-transparent text-white placeholder-gray-500 py-3 outline-none"
+                placeholder="Minimum 8 characters"
                 minLength={8}
                 required
               />
             </div>
-            <p className="text-xs text-gray-500 mt-1">Minimum 8 characters</p>
           </div>
 
           <motion.button
@@ -121,19 +145,29 @@ export default function SignupPage() {
             whileTap={{ scale: 0.98 }}
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-black border border-white/20 py-4 rounded-lg font-semibold hover:bg-gray-900 hover:border-white/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Creating account...' : 'Create Account'}
+            {loading ? (
+              <span className="text-white">Creating account...</span>
+            ) : (
+              <ShinyText
+                text="Create Account"
+                disabled={false}
+                speed={3}
+                className='text-base font-semibold'
+              />
+            )}
           </motion.button>
         </form>
 
-        <p className="text-center mt-6 text-gray-600">
+        <p className="text-center mt-6 text-gray-200">
           Already have an account?{' '}
-          <Link href="/login" className="text-blue-600 font-medium hover:underline">
+          <Link href="/login" className="text-purple-400 font-medium hover:underline hover:text-purple-300">
             Sign in
           </Link>
         </p>
       </motion.div>
     </div>
+    </>
   );
 }
